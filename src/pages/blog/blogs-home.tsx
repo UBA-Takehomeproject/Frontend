@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Pagination = () => (
   <div className="flex justify-center items-center gap-2 mt-8">
@@ -56,26 +57,8 @@ const RightSide = () => (
 
 const BlogHome = () => {
   const [filter, setFilter] = useState("All");
-
   return (
     <div className="font-sans bg-gray-50 min-h-screen px-4 py-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <header className="mb-10">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h1 className="text-3xl font-bold text-uba-red flex-shrink-0">
-            Explore Blogs
-          </h1>
-          <div className="flex flex-1 items-center gap-4 justify-end">
-            <Button
-              variant="outline"
-              className="text-sm font-roboto text-uba-red border-uba-red hover:bg-uba-red hover:text-white ml-2"
-            >
-              Login
-            </Button>
-          </div>
-        </div>
-      </header>
-
       <div className="flex flex-row md:flex-row gap-6">
         {/* Sidebar Filters */}
 

@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AdminRoutes, UsersRoutes } from './main-routes';
 import { useAuth } from '@/context/auth';
-import AuthRoutes from './login-routes';
+import AuthRoutes from './auth-routes';
 import BlogRoutes from './landing-routes';
 
 // ==============================|| ROUTING RENDER ||============================== //

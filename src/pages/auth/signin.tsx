@@ -1,115 +1,90 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
 // import GoogleIcon from "frontend/public/svg/google.svg"
 const LoginPage = () => {
   return (
-    <div className="flex min-h-screen ">
-      {/* Form Side */}
-      <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-20 xl:px-24">
-        <div className="mx-auto w-full max-w-sm lg:w-96">
-          <div>
-            {/* <img
-              className="h-10 w-auto"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=uba&shade=600"
-              alt="Your Company"
-            /> */}
-            <h2 className="mt-8 text-2xl font-bold tracking-tight  text-uba-600">
-              Sign in to your account
-            </h2>
-            <p className="mt-2 text-sm ">
-              Dont have an account?{" "}
-              <a
-                href="#"
-                className="font-semibold  text-uba-600 hover:text-uba-500"
-              >
-                Sign up
-              </a>
-            </p>
-          </div>
+    <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-20 xl:px-24">
+      <div className="mx-auto w-full max-w-sm lg:w-96">
+        <div>
+          <h2 className="mt-8 text-2xl font-bold tracking-tight">
+            Sign in to your account
+          </h2>
+          <p className="mt-2 text-sm ">
+            Dont have an account?{" "}
+            <a
+              href="/auth/signup"
+              className="font-semibold  text-uba-600 hover:text-uba-500"
+            >
+              Sign up
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <form className="space-y-6">
+            <div>
+              <Label htmlFor="email">Email address</Label>
+              <Input id="email" type="email" required autoComplete="email" />
+            </div>
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                required
+                autoComplete="current-password"
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="remember-me" />
+                <Label htmlFor="remember-me">Remember me</Label>
+              </div>
+              <div>
+                <a
+                  href="#"
+                  className="text-sm font-medium text-uba-600 hover:text-uba-500"
+                >
+                  Forgot password?
+                </a>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-uba-red hover:bg-uba-600"
+            >
+              Sign in
+            </Button>
+          </form>
 
           <div className="mt-10">
-            <form className="space-y-6">
-              <div>
-                <Label htmlFor="email">Email address</Label>
-                <Input id="email" type="email" required autoComplete="email" />
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-uba-100" />
               </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                />
+              <div className="relative flex justify-center text-sm font-medium">
+                <span className="bg-white px-6 text-uba-800 rounded-sm">
+                  Or continue with
+                </span>
               </div>
+            </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="remember-me" />
-                  <Label htmlFor="remember-me">Remember me</Label>
-                </div>
-                <div>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-uba-600 hover:text-uba-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-uba-red hover:bg-uba-600"
-              >
-                Sign in
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <Button variant="outline" className="w-full gap-2 border-uba-300">
+                <img src="/svg/google.svg" className="h-5 w-5" />
+                Google
               </Button>
-            </form>
-
-            <div className="mt-10">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-uba-100" />
-                </div>
-                <div className="relative flex justify-center text-sm font-medium">
-                  <span className="bg-white px-6 text-uba-800 rounded-sm">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <Button
-                  variant="outline"
-                  className="w-full gap-2 border-uba-300"
-                >
-                  <img src="/svg/google.svg" className="h-5 w-5" />
-                  Google
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full gap-2 border-uba-300"
-                >
-                  <img src="/svg/facebook.svg" className="h-5 w-5" />
-                  Facebook
-                </Button>
-              </div>
+              <Button variant="outline" className="w-full gap-2 border-uba-300">
+                <img src="/svg/facebook.svg" className="h-5 w-5" />
+                Facebook
+              </Button>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Image Side */}
-      <div className="relative hidden w-0 flex-1 lg:block">
-        <img
-          className="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?auto=format&fit=crop&w=1908&q=80"
-          alt="Background"
-        />
       </div>
     </div>
   );

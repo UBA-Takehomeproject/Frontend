@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 // project import
 import Loadable from '@/components/utils/loadable';
-import MinimalLayout from '@/layout/minimal-layout';
+import AuthLayout from '@/layout/auth-layout';
 
 const AuthSignin = Loadable(lazy(() => import('@/pages/auth/signin')));
 const AuthSignup = Loadable(lazy(() => import('@/pages/auth/signup')));
@@ -10,14 +10,14 @@ const AuthSignup = Loadable(lazy(() => import('@/pages/auth/signup')));
 
 const LoginRoutes = {
     path: '/auth',
-    element: <MinimalLayout />,
+    element: <AuthLayout />,
     children: [
         {
             path: 'signin',
             element: <AuthSignin />
         },
         {
-            path: 'singup',
+            path: 'signup',
             element: <AuthSignup />
         }
     ]

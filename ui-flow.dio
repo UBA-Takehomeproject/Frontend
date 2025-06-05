@@ -1,0 +1,50 @@
+<mxfile host="65bd71144e">
+    <diagram id="O3B4Iqilt00RCQWJbgz6" name="Page-1">
+        <mxGraphModel dx="1735" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Landing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;" edge="1" parent="1" source="3" target="10">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-70" y="230" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-120" y="155"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="Show posts" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="130" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Filter by Author&lt;div&gt;by topic&amp;nbsp;&lt;/div&gt;&lt;div&gt;by flag&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="210" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Signup" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="70" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Login" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="150" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=none;html=1;" edge="1" parent="1" source="7" target="13">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="690" y="105" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Show blogs - (add new blog)&lt;div&gt;(post in them)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="80" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Profile (Author Profile)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Click post show the related topic within the blog&amp;nbsp;&lt;div&gt;And other related post by tag, like tech and all&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-180" y="230" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Create new post" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="650" y="75" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

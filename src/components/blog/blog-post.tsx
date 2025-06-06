@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CardContent } from "../ui/card";
 import { Card } from "../ui/card";
 
@@ -12,7 +13,9 @@ const BlogPostCard = ({
   description: string;
   date: string;
 }) => (
+  
   <Card className="hover:shadow-lg transition duration-300">
+    <Link to={`/blog-post?postid=${name}`}>
     <CardContent className="flex flex-col md:flex-row justify-between items-start gap-4 p-6">
       <div className="flex-1">
         <p className="text-sm text-gray-500">{name}</p>
@@ -24,7 +27,8 @@ const BlogPostCard = ({
       </div>
       <div className="w-full md:w-32 h-24 bg-gray-300 rounded object-cover" />
     </CardContent>
-  </Card>
+  </Link>
+  </Card>  
 );
 
 export default BlogPostCard;

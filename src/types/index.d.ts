@@ -1,8 +1,51 @@
-type User = {
+interface Entity {
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  objectId?: Date;
+}
+
+interface User extends Entity {
   id: string;
   email: string;
-  name: string;
-  role: "ADMIN" | "USER" ;
+  fname: string;
+  lname: string;
+  photoURL: string;
+  authorsInfo?: Author;
+  role: "ADMIN" | "USER";
+}
+
+interface Author extends Entity {
+  fName: string;
+  lName: string;
+  otherName?: string;
+  email: string;
+  phoneNumber: string;
+  photoURL: string;
+  // socialLinks: {
+  //   facebook: string;
+  //   linkedin: string;
+  //   instagram: string;
+  // };
+}
+
+interface Blog extends Entity {
+  title: string;
+  date: string;
+  authorsInfo: Author;
+  coverImage: string;
+  href: string;
+}
+
+interface BlogPost extends Entity {
+  title: string;
+  date: string;
+  content: string;
+  category: string;
+  authorsInfo: Author;
+  coverImage: string;
+  href: string;
+  blog?:Blog;
 };
 
 export type AuthContextType = {

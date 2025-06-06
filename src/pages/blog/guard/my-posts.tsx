@@ -4,24 +4,13 @@ import Pagination from "@/components/custom-ui/pagnation";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-
-
-
-const RightSide = () => (
-  <aside className="hidden md:block md:w-1/4 pr-6 border-l border-gray-200">
-    <div className="flex flex-wrap gap-2"></div>
-  </aside>
-);
-
-const BlogHome = () => {
+const BlogSection = () => {
   const [filter, setFilter] = useState("All");
-  return (
-    <div className="font-sans bg-gray-50 min-h-screen px-4 py-8 max-w-7xl mx-auto">
-      <div className="flex flex-row md:flex-row gap-6">
-        {/* Sidebar Filters */}
 
-        {/* Blog Content */}
-        <div className="flex-1 space-y-6">
+  return (
+    <section className="bg-white py-24 sm:py-32 flex items-center justify-center min-h-screen">
+      <div className="w-1/2 mx-auto flex flex-col items-center">
+        <div className="space-y-6 w-full">
           <div className="flex flex-row justify-between sticky top-0 z-10 bg-gray-50 items-center">
             <TopBar selectedFilter={filter} onSelect={setFilter} />
             <div className="w-full max-w-xs">
@@ -66,10 +55,9 @@ const BlogHome = () => {
           {/* Pagination */}
           <Pagination />
         </div>
-        <RightSide />
       </div>
-    </div>
+    </section>
   );
 };
 
-export default BlogHome;
+export default BlogSection;

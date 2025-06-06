@@ -9,6 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
+import BlogSelectorDialog from "./new-poste-form";
 
 export function UserDropdown() {
   return (
@@ -38,23 +40,30 @@ export function UserDropdown() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>Write</DropdownMenuItem>
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Library</DropdownMenuItem>
-        <DropdownMenuItem>Stories</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to={"/my-account/posts/new"}>+ New post</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          
+        <Link to={"/my-account/profile"}>Profile
+        </Link></DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to={"/my-account/blogs"}>My Blogs</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to={"/my-account/posts"}>My Posts</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>Bookmarks</DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Refine recommendations</DropdownMenuItem>
-        <DropdownMenuItem>Manage publications</DropdownMenuItem>
         <DropdownMenuItem>Help</DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>Apply to the Partner Program</DropdownMenuItem>
         <DropdownMenuItem className="text-green-600 font-medium">
-          Become a member
+          <Link to={"/my-account/become-an-author"}>Become an Author</Link>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

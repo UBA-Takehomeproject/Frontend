@@ -9,7 +9,7 @@ const SignupPage = () => {
       <div className="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <h2 className="mt-8 text-2xl font-bold tracking-tight">
-            Sign in to your account
+            Sign up a new account
           </h2>
           <p className="mt-2 text-sm ">
             I have an account?{" "}

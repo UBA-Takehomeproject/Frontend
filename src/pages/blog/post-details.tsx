@@ -33,7 +33,7 @@ coverImage:
         <PostNavigation />
         {/* <CommentSection /> */}
       </div>
-      <aside className="lg:col-span-4">
+      <aside className="lg:col-span-4 ">
         <Sidebar />
       </aside>
     </div>

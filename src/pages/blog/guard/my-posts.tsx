@@ -1,11 +1,17 @@
 import BlogPostCard from "@/components/blog/blog-post";
 import TopBar from "@/components/custom-ui/filter-ui";
 import Pagination from "@/components/custom-ui/pagnation";
+import BlogPostSkeleton from "@/components/skeleton/blog-skeleton";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useApp } from "@/context/app";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const BlogSection = () => {
   const [filter, setFilter] = useState("All");
+  const {blogPosts,isLoading} =useApp()
+  let isEmpty = (blogPosts?.length ?? 0) < 1 && !isLoading;
 
   return (
     <section className="bg-white py-12 sm:py-18 flex items-center justify-center min-h-screen">
@@ -22,36 +28,38 @@ const BlogSection = () => {
               />
             </div>
           </div>
-          <BlogPostCard
-            name="Jane Doe"
-            title="Understanding React Hooks"
-            description="An in-depth guide into how React Hooks simplify your components and manage state."
-            date="2025/06/05 09:12"
-          />
-          <BlogPostCard
-            name="John Smith"
-            title="Tailwind CSS: Utility First Styling"
-            description="Why Tailwind CSS is gaining popularity and how it speeds up UI development."
-            date="2025/06/04 16:30"
-          />
-          <BlogPostCard
-            name="John Smith"
-            title="Tailwind CSS: Utility First Styling"
-            description="Why Tailwind CSS is gaining popularity and how it speeds up UI development."
-            date="2025/06/04 16:30"
-          />
-          <BlogPostCard
-            name="John Smith"
-            title="Tailwind CSS: Utility First Styling"
-            description="Why Tailwind CSS is gaining popularity and how it speeds up UI development."
-            date="2025/06/04 16:30"
-          />
-          <BlogPostCard
-            name="John Smith"
-            title="Tailwind CSS: Utility First Styling"
-            description="Why Tailwind CSS is gaining popularity and how it speeds up UI development."
-            date="2025/06/04 16:30"
-          />
+          {isLoading ? (
+            <>
+              <BlogPostSkeleton />
+              <BlogPostSkeleton />
+              <BlogPostSkeleton />
+              <BlogPostSkeleton />
+            </>
+          ) : isEmpty ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-lg shadow-inner">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+                alt="No blogs illustration"
+                className="w-24 h-24 mb-4 opacity-80"
+              />
+              <h3 className="text-2xl font-semibold text-gray-700 mb-2">
+                No Blog Post Yet
+              </h3>
+              <p className="text-gray-500 mb-6">
+                You haven't created any blogs= post yet. Start sharing your ideas with
+                the world!
+              </p>
+              <Button asChild className="bg-uba-red hover:bg-uba-600">
+                <Link to="new">+ Create Your First Blog Post</Link>
+              </Button>
+            </div>
+          ) : (
+            <>
+              {blogPosts?.map((bp) => {
+                return <BlogPostCard blogPost={bp} key={bp.objectId} />;
+              })}
+            </>
+          )}
 
           {/* Pagination */}
           <Pagination />

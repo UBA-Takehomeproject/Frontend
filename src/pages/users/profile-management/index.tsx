@@ -19,28 +19,9 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 export default function ProfilePage() {
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
-  const user: User = {
-    id: "user_123456",
-    email: "janedoe@example.com",
-    fname: "Jane",
-    lname: "Doe",
-    photoURL: "https://randomuser.me/api/portraits/women/44.jpg",
-    role: "USER",
-    createdAt: new Date("2024-04-15T10:00:00Z"),
-    updatedAt: new Date("2025-06-01T12:30:00Z"),
-    authorsInfo: {
-      fName: "Jane",
-      lName: "Doe",
-      otherName: "Elizabeth",
-      email: "janedoe@writinghub.com",
-      phoneNumber: "+232700112233",
-      photoURL: "https://randomuser.me/api/portraits/women/44.jpg",
-      createdAt: new Date("2024-04-15T10:00:00Z"),
-      updatedAt: new Date("2025-06-01T12:30:00Z"),
-    },
-  };
+ 
 
   const { register, handleSubmit, reset, setValue, watch } = useForm({
     defaultValues: {

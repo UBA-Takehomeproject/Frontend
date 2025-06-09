@@ -58,6 +58,7 @@ const UsersRoutes = {
         },
         {
           path: "new",
+          paramKey: "blogId",
           element: <NewPost />,
         },
       ],

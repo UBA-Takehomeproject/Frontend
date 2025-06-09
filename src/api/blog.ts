@@ -1,102 +1,115 @@
 import type { Blog } from "@/types";
+import { fetchWithRefresh } from "./service";
 
-type FetchBlogsParams = {
-  authorsId?: string;
-  rowCount?: number;
-  cursor?: number;
-};
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL + "/api/blog";
 
-export async function fetchBlogs(params: FetchBlogsParams) {
-  const { authorsId, rowCount = 10, cursor = 0 } = params;
-  let url = "";
-
-  if (authorsId) {
-    // Fetch blogs by partner id with pagination
-    url = `/api/blogs?partnerId=${encodeURIComponent(
-      authorsId
-    )}&cursor=${cursor}&rowCount=${rowCount}`;
-  } else {
-    // Fetch all blogs with pagination
-    url = `/api/blogs?cursor=${cursor}&rowCount=${rowCount}`;
-  }
-
-  const response = await fetch(url, {
+// Fetch all blogs
+export async function fetchAllBlogs(): Promise<Blog[]> {
+  const response = await fetchWithRefresh(API_BASE_URL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include", // Ensure cookies (including JWT) are sent
+    credentials: "include",
   });
-
   if (!response.ok) {
-    throw new Error(`Failed to fetch blogs: ${response.statusText}`);
+    throw new Error("Failed to fetch blogs");
   }
-
-  return {
-    data: await response.json(),
-    nextCursor: 124,
-    hasMore: true,
-    count: 200,
-  };
+  return response.json();
 }
 
-export async function addBlog(params: Partial<Blog>) {
-  const response = await fetch("/api/blogs", {
+// Fetch blog by ID
+export async function fetchBlogById(id: string): Promise<Blog> {
+  const response = await fetchWithRefresh(
+    `${API_BASE_URL}/${encodeURIComponent(id)}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch blog");
+  }
+  return response.json();
+}
+
+// Create a new blog
+export async function createBlog(blog: Partial<Blog>): Promise<Blog> {
+  const response = await fetchWithRefresh(API_BASE_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(params),
+    body: JSON.stringify(blog),
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to add blog: ${response.statusText}`);
+    const error = await response.text();
+    throw new Error(error || "Failed to create blog");
   }
-
   return await response.json();
 }
 
-export async function updateBlog(params: { id: string; data: Partial<Blog> }) {
-  if (!params.id) {
-    throw new Error("Blog id is required for update");
-  }
-
-  const response = await fetch(
-    `/api/blogs/${encodeURIComponent(String(params.id ?? ""))}`,
+// Update a blog
+export async function updateBlog(
+  id: string,
+  blog: Partial<Blog>
+): Promise<void> {
+  const response = await fetchWithRefresh(
+    `${API_BASE_URL}/${encodeURIComponent(id)}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(params),
+      body: JSON.stringify(blog),
     }
   );
-
   if (!response.ok) {
-    throw new Error(`Failed to update blog: ${response.statusText}`);
+    const error = await response.text();
+    throw new Error(error || "Failed to update blog");
   }
-
-  return await response.json();
 }
 
-export async function deleteBlog(params: { id: string }) {
-  if (!params.id) {
-    throw new Error("Blog id is required for deletion");
-  }
-
-  const response = await fetch(`/api/blogs/${encodeURIComponent(params.id)}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-
+// Delete a blog
+export async function deleteBlog(id: string): Promise<void> {
+  const response = await fetchWithRefresh(
+    `${API_BASE_URL}/${encodeURIComponent(id)}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
   if (!response.ok) {
-    throw new Error(`Failed to delete blog: ${response.statusText}`);
+    const error = await response.text();
+    throw new Error(error || "Failed to delete blog");
   }
+}
 
+// Fetch blogs by author ID
+export async function fetchBlogsByAuthorId(authorId: string): Promise<Blog[]> {
+  
+  const response = await fetchWithRefresh(
+    `${API_BASE_URL}/by/${encodeURIComponent(authorId)}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
+ 
+  if (!response.ok) {
+    throw new Error("Failed to fetch blogs by author");
+  }
   return await response.json();
 }

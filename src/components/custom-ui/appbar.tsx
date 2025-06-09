@@ -10,10 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { UserDropdown } from "./users-profile-dropdown";
+import { useAuth } from "@/context/auth";
 
 export function AppBar() {
  
-  const { data: session } = { data: { user: {image:"",name:"Emmanuel kofi"} } };
+  const { user } = useAuth()
  
   return (
     <header className="w-full text-uba-red  border-b bg-white px-4 py-2 flex items-center justify-between">
@@ -25,7 +26,7 @@ export function AppBar() {
 
       {/* Right side: Auth status */}
       <div>
-        {!session?.user ? (
+        {!user ? (
           <Button
             variant="outline"
             className="text-sm font-roboto text-uba-red border-uba-red hover:bg-uba-red hover:text-white ml-2"

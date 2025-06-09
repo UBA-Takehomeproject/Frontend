@@ -1,6 +1,13 @@
-import NewPostForm from "@/components/custom-ui/new-poste-form";
+import NewPostForm from "@/components/custom-ui/new-post-form";
+import { useApp } from "@/context/app";
+
+import { useParams } from "react-router-dom";
 
 const NewPost = () => {
+  // Optionally get blogId param from the route
+  const { blogId } = useParams<{ blogId?: string }>();
+  // const { blogPosts, isLoading } = useApp();
+// alert(blogPosts.length)
   return (
     <section className="bg-white py-12 sm:py-18">
       {/* <section className="bg-white py-24 sm:py-32"> */}
@@ -13,7 +20,7 @@ const NewPost = () => {
             Learn how to grow your business with our expert advice.
           </p>
         </div>
-        <NewPostForm />
+        <NewPostForm blogId={blogId} />
       </div>
     </section>
   );

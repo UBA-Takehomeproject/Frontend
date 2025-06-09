@@ -2,25 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/auth";
-import { toast } from "@/hooks/use-toast";
-import type { Author } from "@/types";
+import { useCreateBlog } from "@/hooks/use-blogs";
+import { useToast } from "@/hooks/use-toast";
+import type { Author, Blog } from "@/types";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 
-type BlogFormData = {
-  title: string;
-  date: string;
-  authorsInfo: Author;
-  coverImage: string;
-  href: string;
-};
-
 export default function BlogForm() {
   const auth = useAuth();
-  const authorsInfo = auth.user?.authorsInfo as Author;
-
-  const { register, handleSubmit, reset, setValue } = useForm<BlogFormData>();
+  const { toast } = useToast();
+  const { mutate: createBlog, isPending, error } = useCreateBlog();
+  const { register, handleSubmit, reset, setValue } = useForm<Blog>();
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
   const onDropCover = (acceptedFiles: File[]) => {
@@ -28,10 +21,12 @@ export default function BlogForm() {
     const previewUrl = URL.createObjectURL(file);
     setCoverPreview(previewUrl);
     setValue("coverImage", previewUrl);
-    if (authorsInfo)
-      setValue("authorsInfo",authorsInfo);
-      
-   };
+    const authorsInfo = auth.user?.authorsInfo as Author;
+
+    if (authorsInfo) {
+      setValue("authorsObjectId", authorsInfo.objectId as string);
+    }
+  };
 
   const { getRootProps: getCoverRoot, getInputProps: getCoverInput } =
     useDropzone({
@@ -40,21 +35,39 @@ export default function BlogForm() {
       maxFiles: 1,
     });
 
-  const onSubmit = async (data: BlogFormData) => {
+  const onSubmit = async (data: Blog) => {
     try {
- 
-      const res = await fetch("/api/blogs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const authorsInfo = auth.user?.authorsInfo as Author;
+      data.authorsObjectId = authorsInfo.objectId;
+      data.href = `/blog/`;
+      //later will be changed to proper href or done in server
+      createBlog(data, {
+        onSuccess: () => {
+          // NOTE: If the toast is not appearing, ensure you are using the correct toast hook from shadcn/ui.
+          // If you are using the shadcn/ui toast system, you should use the `useToast` hook, not a direct import.
+          // Example fix:
+          // const { toast } = useToast(); // Place this at the top of your component
+          toast({
+            title: "Success",
+            description: "Blog created successfully!",
+          });
+          reset();
+          setCoverPreview(null);
+        },
+        onError: (error) => {
+          toast({
+            title: "Error",
+            description: error.message || "Failed to create blog",
+            variant: "destructive",
+          });
+        },
       });
-
-      if (!res.ok) throw new Error("Failed to submit blog");
-      toast({ title: "Blog submitted successfully!" });
-      reset();
-      setCoverPreview(null);
     } catch (error) {
-      toast({ title: "Error", description: (error as Error).message });
+      toast({
+        title: "Error",
+        description: (error as Error).message || "Failed to create blog",
+        variant: "destructive",
+      });
     }
   };
 
@@ -78,12 +91,11 @@ export default function BlogForm() {
       </div>
 
       <div>
-        <Label htmlFor="authorName">Author First Name</Label>
-        <Input id="authorName" {...register("authorsInfo.fName", { required: true })} />
-      </div>
-      <div>
-        <Label htmlFor="authorName">Author Last Name</Label>
-        <Input id="authorName" {...register("authorsInfo.lName", { required: true })} />
+        <Label htmlFor="description">Description</Label>
+        <Input
+          id="description"
+          {...register("description", { required: true })}
+        />
       </div>
 
       {/* Dropzone: Cover Image */}
@@ -114,9 +126,12 @@ export default function BlogForm() {
         {...register("coverImage")}
         onChange={(e) => setCoverPreview(e.target.value)}
       />
-
-      <Button type="submit" className="w-full bg-uba-red hover:bg-uba-red">
-        Submit Blog
+      <Button
+        type="submit"
+        className="w-full bg-uba-red hover:bg-uba-red"
+        disabled={isPending}
+      >
+        {isPending ? "Creating..." : "Submit Blog"}
       </Button>
     </form>
   );

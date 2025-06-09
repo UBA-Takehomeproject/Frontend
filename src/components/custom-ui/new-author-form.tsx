@@ -7,29 +7,31 @@ import type { Author } from "@/types";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useEffect, useState } from "react";
+import { Textarea } from "../ui/textarea";
+import { useCreateAuthor } from "@/hooks/use-author";
+import { useNavigate } from "react-router-dom";
 
 type AuthorFormData = Author;
 
 export default function RegisterAuthorForm() {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-  } = useForm<AuthorFormData>({
-    defaultValues: {
-      fName: user?.fname || "",
-      lName: user?.lname || "",
-      email: user?.email || "",
-      photoURL: user?.photoURL || "",
-    },
-  });
+  const { register, handleSubmit, reset, setValue } =
+    useForm<AuthorFormData>({
+      defaultValues: {
+        objectId:user?.objectId,
+        fName: user?.fname || "",
+        lName: user?.lname || "",
+        email: user?.email || "",
+        photoURL: user?.photoURL || "",
+      },
+    });
 
   const [photoPreview, setPhotoPreview] = useState<string | null>(
     user?.photoURL || null
   );
+
+  const { mutate: createAuthor, isPending } = useCreateAuthor();
 
   const onDropPhoto = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -53,21 +55,24 @@ export default function RegisterAuthorForm() {
     setPhotoPreview(user?.photoURL || null);
   }, [user, setValue]);
 
-  const onSubmit = async (data: AuthorFormData) => {
-    try {
-      const res = await fetch("/api/author/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) throw new Error("Failed to register as author");
-
-      toast({ title: "Registration successful!" });
-      reset();
-    } catch (error) {
-      toast({ title: "Error", description: (error as Error).message });
-    }
+  const onSubmit = (data: AuthorFormData) => {
+    createAuthor(data, {
+      onSuccess: () => {
+        toast({ title: "Registration successful!" });
+        reset();
+        setPhotoPreview(user?.photoURL || null);
+        navigate("/")
+      },
+      onError: (error: any) => {
+        toast({
+          title: "Error",
+          description:
+            error instanceof Error
+              ? error.message
+              : "Failed to register as author",
+        });
+      },
+    });
   };
 
   return (
@@ -75,7 +80,9 @@ export default function RegisterAuthorForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 max-w-2xl mx-auto p-6"
     >
-      <h2 className="text-2xl font-semibold text-center">Register as an Author</h2>
+      <h2 className="text-2xl font-semibold text-center">
+        Register as an Author
+      </h2>
 
       <div>
         <Label htmlFor="fName">First Name</Label>
@@ -91,6 +98,10 @@ export default function RegisterAuthorForm() {
         <Label htmlFor="otherName">Other Name</Label>
         <Input id="otherName" {...register("otherName")} />
       </div>
+      <div>
+        <Label htmlFor="otherName">Bio</Label>
+        <Textarea rows={3} id="bio" {...register("bio")} />
+      </div>
 
       <div>
         <Label htmlFor="email">Email</Label>
@@ -99,7 +110,10 @@ export default function RegisterAuthorForm() {
 
       <div>
         <Label htmlFor="phoneNumber">Phone Number</Label>
-        <Input id="phoneNumber" {...register("phoneNumber", { required: true })} />
+        <Input
+          id="phoneNumber"
+          {...register("phoneNumber", { required: true })}
+        />
       </div>
 
       {/* Dropzone for Profile Photo */}
@@ -130,8 +144,12 @@ export default function RegisterAuthorForm() {
         onChange={(e) => setPhotoPreview(e.target.value)}
       />
 
-      <Button type="submit" className="w-full bg-uba-red hover:bg-uba-red/90">
-        Submit
+      <Button
+        type="submit"
+        className="w-full bg-uba-red hover:bg-uba-red/90"
+        disabled={isPending}
+      >
+        {isPending ? "Submitting..." : "Submit"}
       </Button>
     </form>
   );

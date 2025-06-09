@@ -16,7 +16,7 @@ const BlogSection = () => {
   return (
     <section className="bg-white py-12 sm:py-18 flex items-center justify-center min-h-screen">
     {/* <section className="bg-white py-24 sm:py-32 "> */}
-      <div className="w-1/2 mx-auto flex flex-col items-center">
+      <div className="md:w-9/12  w-11/12  mx-auto flex flex-col items-center">
         <div className="space-y-6 w-full">
           <div className="flex flex-row justify-between sticky top-0 z-10 bg-gray-50 items-center">
             <TopBar selectedFilter={filter} onSelect={setFilter} />

@@ -6,6 +6,7 @@ import MinimalLayout from '@/layout/minimal-layout';
 
 const BlogPostPage = Loadable(lazy(() => import("@/pages/blog/post-details")));
 const BlogHome = Loadable(lazy(() => import('@/pages/blog/blogs-home')));
+const BlogDetails = Loadable(lazy(() => import('@/pages/blog/blog-details')));
  // Blog details
  //
 // ==============================|| AUTH ROUTING ||============================== //
@@ -26,7 +27,12 @@ const LandingPages = {
           paramKey: "postid",
           element: <BlogPostPage />,
         },
-        
+        ,
+        {
+          path: "blog",
+          paramKey: "blogid",
+          element: <BlogDetails />,
+        },
 
     ]
 };

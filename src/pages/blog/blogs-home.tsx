@@ -28,7 +28,7 @@ const BlogAsideSkeleton = () => (
 
 const BlogAsideCard = ({ blog }: { blog: Blog }) => (
   <Link
-    to={`/blog/${blog.objectId}`}
+    to={`/blog?blogid=${blog.objectId}`}
     className="flex items-center space-x-3 bg-white hover:bg-gray-50 transition rounded-lg shadow p-3 group"
     key={blog.objectId}
   >

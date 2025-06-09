@@ -36,6 +36,7 @@ interface Blog extends Entity {
   description: string;
   authorsInfo: Author;
   coverImage: string;
+  blogPosts?:BlogPost[]
   href: string;
   authorsObjectId?: string;
 }

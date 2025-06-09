@@ -6,15 +6,7 @@ import { AuthProvider } from "./context/auth";
 import { AppProvider } from "./context/app";
 import "./index.css";
 import ThemeRoutes from "./routes";
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 0, // Always stale
-      refetchOnMount: true,
-      refetchOnWindowFocus: true,
-    },
-  },
-});
+const queryClient = new QueryClient( );
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
